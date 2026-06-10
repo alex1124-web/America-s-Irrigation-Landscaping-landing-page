@@ -1451,7 +1451,7 @@
     <a href="#contact" class="mobile-cta-quote">Get Free Quote</a>
   </div>
 
-  <!-- ======== MINIMAL JS: Smooth scroll + mobile nav ======== -->
+  <!-- ======== MINIMAL JS: Smooth scroll + mobile nav + form ======== -->
   <script>
     // Mobile nav toggle
     var hamburger = document.getElementById('hamburger');
@@ -1462,13 +1462,43 @@
       hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
-    // Close nav on link click (mobile)
     navLinks.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         navLinks.classList.remove('open');
         hamburger.setAttribute('aria-expanded', 'false');
       });
     });
+
+    // Web3Forms — submit in background, show success message
+    var contactForm = document.querySelector('form[action*="web3forms"]');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var btn = contactForm.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(contactForm)
+        })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data.success) {
+            contactForm.innerHTML = '<p style="text-align:center;padding:32px 0;font-size:1.1rem;font-weight:700;color:var(--green-dark);">✓ Request sent! We\'ll be in touch within 24 hours.</p>';
+          } else {
+            btn.textContent = 'Send My Free Quote Request';
+            btn.disabled = false;
+            alert('Something went wrong. Please call us at (888) 530-9994.');
+          }
+        })
+        .catch(function () {
+          btn.textContent = 'Send My Free Quote Request';
+          btn.disabled = false;
+          alert('Something went wrong. Please call us at (888) 530-9994.');
+        });
+      });
+    }
   </script>
 
 </body>
