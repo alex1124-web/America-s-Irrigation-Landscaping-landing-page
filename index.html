@@ -1353,7 +1353,11 @@
 
       <div class="contact-form">
         <h3>Request Your Free Estimate</h3>
-        <form action="#" method="POST" novalidate aria-label="Contact form">
+        <form action="https://api.web3forms.com/submit" method="POST" novalidate aria-label="Contact form">
+          <input type="hidden" name="access_key" value="d73269ee-94a1-4e29-80e6-1a1b5295d0b1">
+          <input type="hidden" name="subject" value="New Quote Request — America's Irrigation & Landscaping">
+          <input type="hidden" name="from_name" value="America's Irrigation & Landscaping Website">
+          <input type="checkbox" name="botcheck" style="display:none">
           <div class="form-row">
             <div class="form-group">
               <label for="contact-name">Full Name <span aria-hidden="true">*</span></label>
